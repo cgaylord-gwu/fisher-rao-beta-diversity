@@ -19,10 +19,9 @@ library(ggplot2)
 library(dplyr)
 library(tidyr)
 
-# BASE <- "/GWSPH/groups/cbi/Users/cgaylord/research_data/genomics/vermiculture"
-BASE <- "~/src/dissertation/vermiculture_aim1"
+BASE <- "."
 
-output_dir <- file.path(BASE, "aim1/figures")
+output_dir <- file.path(BASE, "figures")
 csv_path   <- file.path(output_dir, "permanova_fr_bc_multilevel.csv")
 
 df <- read.csv(csv_path, stringsAsFactors = FALSE)
@@ -224,5 +223,47 @@ out2 <- file.path(output_dir, "permanova_crosslevel_r2")
 ggsave(paste0(out2, ".png"), p2, width = 12, height = 6, dpi = 300)
 ggsave(paste0(out2, ".pdf"), p2, width = 12, height = 6)
 cat("Saved: permanova_crosslevel_r2.png/pdf\n")
+
+p2 <- ggplot(r2_long,
+             aes(x     = Level,
+                 y     = R2,
+                 color = Metric,
+                 shape = Stream,
+                 alpha = alpha_val,
+                 group = interaction(Stream, Metric))) +
+  geom_line(aes(group = interaction(Stream, Metric)),
+            linewidth = 0.5, linetype = "dashed",
+            alpha = 0.25) +   # fixed low alpha for all lines
+  geom_point(aes(alpha = alpha_val), size = 3.5) +
+  scale_color_manual(values = c("Fisher-Rao"  = "#E41A1C",
+                                "Bray-Curtis" = "#377EB8")) +
+  scale_shape_manual(values = c("Amplicon"        = 16,
+                                "MEGAHIT Contigs" = 17,
+                                "Read Based"      = 15)) +
+  scale_alpha_identity() +
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
+  facet_wrap(~ Effect, ncol = 3, scales = "free_y") +
+  theme_bw(base_size = 11) +
+  theme(
+    strip.text      = element_text(face = "bold", size = 11),
+    axis.text.x     = element_text(angle = 30, hjust = 1),
+    legend.position = "bottom",
+    legend.box      = "vertical",
+    plot.title      = element_text(face = "bold", size = 13),
+    plot.subtitle   = element_text(size = 10, color = "grey40")
+  ) +
+  labs(
+    # title    = "PERMANOVA R² by Taxonomic Level",
+    # subtitle = "Faded points: p ≥ 0.05",
+    x        = "Taxonomic Level",
+    y        = "R²",
+    color    = "Metric",
+    shape    = "Stream"
+  )
+
+out2 <- file.path(output_dir, "permanova_crosslevel_r2-notitle")
+ggsave(paste0(out2, ".png"), p2, width = 12, height = 6, dpi = 300)
+ggsave(paste0(out2, ".pdf"), p2, width = 12, height = 6)
+cat("Saved: permanova_crosslevel_r2-notitle.png/pdf\n")
 
 cat("\n=== Done ===\n")

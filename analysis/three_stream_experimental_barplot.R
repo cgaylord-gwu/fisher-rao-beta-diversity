@@ -16,24 +16,24 @@ library(scales)
 # Define %||% if rlang not loaded
 `%||%` <- function(a, b) if (!is.null(a) && !is.na(a)) a else b
 
-BASE <- "~/src/dissertation/vermiculture_aim1"
+BASE <- "."
 
 streams <- list(
   "Amplicon" = list(
-    seqtab = file.path(BASE, "aim1/amplicon_native/16S/tables/seqtab.rds"),
-    taxa   = file.path(BASE, "aim1/amplicon_native/16S/tables/taxa.rds")
+    seqtab = file.path(BASE, "data/amplicon_native/16S/tables/seqtab.rds"),
+    taxa   = file.path(BASE, "data/amplicon_native/16S/tables/taxa.rds")
   ),
   "MEGAHIT Contigs" = list(
-    seqtab = file.path(BASE, "aim1/megahit_dada2/tables/seqtab.rds"),
-    taxa   = file.path(BASE, "aim1/megahit_dada2/tables/taxa.rds")
+    seqtab = file.path(BASE, "data/megahit_contig/tables/seqtab.rds"),
+    taxa   = file.path(BASE, "data/megahit_contig/tables/taxa.rds")
   ),
   "Read-Based" = list(
-    seqtab = file.path(BASE, "aim1/dada2/all_extracted/tables/seqtab_r2_only.rds"),
-    taxa   = file.path(BASE, "aim1/dada2/all_extracted/tables/taxa_r2_only.rds")
+    seqtab = file.path(BASE, "data/extracted_read/tables/seqtab.rds"),
+    taxa   = file.path(BASE, "data/extracted_read/tables/taxa.rds")
   )
 )
 
-output_dir <- file.path(BASE, "aim1/figures")
+output_dir <- file.path(BASE, "figures")
 dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
 
 N_TOP_PHYLA <- 10

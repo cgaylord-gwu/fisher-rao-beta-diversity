@@ -3,8 +3,10 @@
 Reference implementation and analysis code for Fisher–Rao distance as a
 principled dissimilarity measure for microbial community compositional data.
 
-**Authors:** Clark Gaylord, Marcos Pérez-Losada, Keith A. Crandall  
-**Affiliation:** Computational Biology Institute, The George Washington University
+**Authors:** Clark Gaylord, Marcos Pérez-Losada, Keith A. Crandall
+**Affiliation:** Computational Biology Institute and Department of Biostatistics
+& Bioinformatics, Milken Institute School of Public Health, The George
+Washington University, Washington, DC, USA
 
 ---
 
@@ -12,8 +14,8 @@ principled dissimilarity measure for microbial community compositional data.
 
 This repository accompanies the manuscript:
 
-> Gaylord C, Pérez-Losada M, Crandall KA. Fisher–Rao distance as a principled
-> dissimilarity for microbial community composition. (in preparation)
+> Gaylord, C., Pérez-Losada, M., & Crandall, K.A. Fisher–Rao distance as a
+> principled dissimilarity for microbial community composition. (in preparation)
 
 After normalization to relative abundances, microbial community samples are
 compositions on the probability simplex. Fisher–Rao distance is the geodesic
@@ -31,10 +33,16 @@ vermicompost microbiome dataset.
 R/
   fisher_rao.R                  # Reference implementation: fisher_rao_dist()
 analysis/
-  pairwise_distances_multilevel.R   # CV and pairwise distance comparisons
-  permanova_fr_bc_multilevel.R      # PERMANOVA across taxonomic levels
-  plot_permanova_multilevel.R       # PERMANOVA heatmap and R² figures
-  three_stream_experimental_barplot.R  # Phylum-level composition figure
+  pairwise_distances_multilevel.R    # CV and pairwise distance comparisons
+  permanova_fr_bc_multilevel.R       # PERMANOVA across taxonomic levels
+  plot_permanova_multilevel.R        # PERMANOVA heatmap and R² figures
+  three_stream_experimental_barplot.R  # Phylum-level composition figure (main text)
+  three_stream_barplot_multilevel.R    # Composition figures, all 4 levels (supplement)
+data/
+  amplicon_native/16S/tables/{seqtab,taxa}.rds   # Native 16S amplicon stream
+  megahit_contig/tables/{seqtab,taxa}.rds        # MEGAHIT->Barrnap->cutadapt->BBMap->DADA2 stream
+  extracted_read/tables/{seqtab,taxa}.rds        # Read-based (BBDuk) extraction stream
+figures/                            # Created by the analysis scripts on first run
 ```
 
 ---
@@ -68,19 +76,30 @@ taxa contribute zero to the sum and require no pseudocount or imputation.
 
 ## Reproducibility note
 
-The R analysis scripts operate on processed ASV count tables derived from
-the raw sequencing data in BioProject PRJNA777435. The upstream
-bioinformatics pipeline entails:
+The processed ASV count tables (`data/`) used by the analysis scripts are
+included in this repository, so `analysis/*.R` can be run directly from a
+clean checkout — no external data download is required. Each script writes
+its outputs to `figures/`, created on first run:
+
+```r
+Rscript analysis/pairwise_distances_multilevel.R
+Rscript analysis/permanova_fr_bc_multilevel.R
+Rscript analysis/plot_permanova_multilevel.R    # after permanova script, reads its CSV
+Rscript analysis/three_stream_experimental_barplot.R   # main-text Phylum figure
+Rscript analysis/three_stream_barplot_multilevel.R     # supplement Figures S4-S7, all 4 levels
+```
+
+These tables were derived from the raw sequencing data in BioProject
+PRJNA777435 via an upstream bioinformatics pipeline entailing:
 -  read quality control
 -  shotgun assembly (MEGAHIT)
 -  16S rRNA gene prediction (Barrnap)
 -  V4 region extraction (cutadapt)
 -  read-level abundance recovery (BBMap), and
--  amplicon sequence variant inference (DADA2 with SILVA 138.1 taxonomy) 
+-  amplicon sequence variant inference (DADA2 with SILVA 138.1 taxonomy)
 
 Full pipeline documentation, including parameters and workflow code, will
-accompany a separate bioinformatics-focused publication. Processed data
-files are available from the authors on request.
+accompany a separate bioinformatics-focused publication.
 
 ---
 
@@ -108,8 +127,8 @@ Taxonomy: SILVA 138.1
 
 If you use this implementation, please cite:
 
-> Gaylord C, Pérez-Losada M, Crandall KA. Fisher–Rao distance as a principled
-> dissimilarity for microbial community composition. (in preparation)
+> Gaylord, C., Pérez-Losada, M., & Crandall, K.A. Fisher–Rao distance as a
+> principled dissimilarity for microbial community composition. (in preparation)
 
 ---
 

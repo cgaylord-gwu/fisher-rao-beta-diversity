@@ -1,7 +1,8 @@
 ## fisher_rao.R
 ##
-## Clark Gaylord
-## Computational Biology Institute, The George Washington University
+## Clark Gaylord, Marcos Pérez-Losada, Keith A. Crandall
+## Computational Biology Institute, Milken Institute School of Public Health,
+## The George Washington University
 ##
 ## Developed with assistance from Claude (Anthropic).
 ##
@@ -10,7 +11,7 @@
 ##
 ## For the theoretical background and empirical evaluation, see:
 ##
-##   Gaylord C, Pérez-Losada M, Crandall KA.
+##   Gaylord, C., Pérez-Losada, M., & Crandall, K.A.
 ##   Fisher-Rao distance as a principled dissimilarity for microbial community
 ##   composition. (in preparation)
 ##
