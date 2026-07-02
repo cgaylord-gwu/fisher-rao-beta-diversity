@@ -59,11 +59,28 @@ adonis2(d ~ treatment + time, data = metadata)
 
 The distance between samples *i* and *j* is:
 
-$$d_{\mathrm{FR}}(i, j) = 2 \arccos\left(\sum_{k=1}^{K} \sqrt{p_{ik}\, p_{jk}}\right)$$
+$$d_{\mathrm{FR}}(i, j) = 2 \mathrm{arccos} \left(\sum_{k=1}^{K} \sqrt{p_{ik}\ p_{jk}}\right)$$
 
-where the inner sum is the Bhattacharyya coefficient. The formula is
-defined on the closed simplex, including the boundary; absent taxa
-contribute zero to the sum and require no pseudocount or imputation.
+The formula is defined on the closed simplex, including the boundary; absent
+taxa contribute zero to the sum and require no pseudocount or imputation.
+
+---
+
+## Reproducibility note
+
+The R analysis scripts operate on processed ASV count tables derived from
+the raw sequencing data in BioProject PRJNA777435. The upstream
+bioinformatics pipeline entails:
+-  read quality control
+-  shotgun assembly (MEGAHIT)
+-  16S rRNA gene prediction (Barrnap)
+-  V4 region extraction (cutadapt)
+-  read-level abundance recovery (BBMap), and
+-  amplicon sequence variant inference (DADA2 with SILVA 138.1 taxonomy) 
+
+Full pipeline documentation, including parameters and workflow code, will
+accompany a separate bioinformatics-focused publication. Processed data
+files are available from the authors on request.
 
 ---
 
