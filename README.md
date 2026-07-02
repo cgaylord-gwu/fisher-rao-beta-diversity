@@ -59,7 +59,7 @@ adonis2(d ~ treatment + time, data = metadata)
 
 The distance between samples *i* and *j* is:
 
-$$d_{\mathrm{FR}}(i, j) = 2 \arccos\!\left(\sum_{k=1}^{K} \sqrt{p_{ik}\, p_{jk}}\right)$$
+$$d_{\mathrm{FR}}(i, j) = 2 \arccos\left(\sum_{k=1}^{K} \sqrt{p_{ik}\, p_{jk}}\right)$$
 
 where the inner sum is the Bhattacharyya coefficient. The formula is
 defined on the closed simplex, including the boundary; absent taxa
